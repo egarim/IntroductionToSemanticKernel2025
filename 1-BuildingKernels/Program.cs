@@ -46,25 +46,40 @@ namespace BuildingKernels
             Console.WriteLine(await kernel.InvokePromptAsync(prompt1));
             Console.WriteLine("\nPress any key for next example...");
             Console.ReadKey();
-           
+
 
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("Detailed Prompt Result:");
             Console.WriteLine(await kernel.InvokePromptAsync(prompt2));
             Console.WriteLine("\nPress any key for next example...");
             Console.ReadKey();
-           
+
 
             Console.ForegroundColor = ConsoleColor.Blue;
             Console.WriteLine("Very Detailed Prompt Result:");
             Console.WriteLine(await kernel.InvokePromptAsync(prompt3));
             Console.WriteLine("\nPress any key for next example...");
             Console.ReadKey();
-            
+
 
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("Most Detailed Prompt Result:");
             Console.WriteLine(await kernel.InvokePromptAsync(prompt4));
+            Console.ReadKey();
+
+            Console.Clear();
+
+            for (int i = 0; i < 7; i++)
+            {
+                Console.WriteLine();
+            }
+            Console.ForegroundColor = ConsoleColor.Magenta;
+
+            
+            Console.WriteLine("What's next?");
+            Console.ReadKey();
+            Console.WriteLine("Rewrite previous answer in VB.net:");
+            //Console.WriteLine(await kernel.InvokePromptAsync("Rewrite previous answer in VB.net"));
             Console.ReadKey();
         }
     }

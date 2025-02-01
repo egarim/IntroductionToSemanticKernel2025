@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.13.35716.79
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildingKernels", "1-BuildingKernels\BuildingKernels.csproj", "{2CED9239-A60E-946E-F40C-179CB7F1C7B6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "1-BuildingKernels", "1-BuildingKernels\1-BuildingKernels.csproj", "{2CED9239-A60E-946E-F40C-179CB7F1C7B6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatHistory", "2-ChatHistory\ChatHistory.csproj", "{32D73C89-1D07-1EAE-B646-292BA8351931}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "2-ChatHistory", "2-ChatHistory\2-ChatHistory.csproj", "{32D73C89-1D07-1EAE-B646-292BA8351931}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "3-KernelFunctions", "3-KernelFunctions\3-KernelFunctions.csproj", "{C1E79664-E06F-AD87-1C02-BF1C672FD663}"
 EndProject

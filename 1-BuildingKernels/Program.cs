@@ -41,24 +41,28 @@ namespace BuildingKernels
                          "10. Display 'Press any key to exit' at bottom\n" +
                          "Use .NET 9 features where applicable";
 
+            Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine("Basic Prompt Result:");
             Console.WriteLine(await kernel.InvokePromptAsync(prompt1));
             Console.WriteLine("\nPress any key for next example...");
             Console.ReadKey();
-            Console.Clear();
+           
 
+            Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("Detailed Prompt Result:");
             Console.WriteLine(await kernel.InvokePromptAsync(prompt2));
             Console.WriteLine("\nPress any key for next example...");
             Console.ReadKey();
-            Console.Clear();
+           
 
+            Console.ForegroundColor = ConsoleColor.Blue;
             Console.WriteLine("Very Detailed Prompt Result:");
             Console.WriteLine(await kernel.InvokePromptAsync(prompt3));
             Console.WriteLine("\nPress any key for next example...");
             Console.ReadKey();
-            Console.Clear();
+            
 
+            Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("Most Detailed Prompt Result:");
             Console.WriteLine(await kernel.InvokePromptAsync(prompt4));
             Console.ReadKey();

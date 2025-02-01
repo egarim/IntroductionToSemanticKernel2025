@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildingKernels", "1-Buildi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatHistory", "2-ChatHistory\ChatHistory.csproj", "{32D73C89-1D07-1EAE-B646-292BA8351931}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "3-KernelFunctions", "3-KernelFunctions\3-KernelFunctions.csproj", "{C1E79664-E06F-AD87-1C02-BF1C672FD663}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{32D73C89-1D07-1EAE-B646-292BA8351931}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{32D73C89-1D07-1EAE-B646-292BA8351931}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{32D73C89-1D07-1EAE-B646-292BA8351931}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C1E79664-E06F-AD87-1C02-BF1C672FD663}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C1E79664-E06F-AD87-1C02-BF1C672FD663}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C1E79664-E06F-AD87-1C02-BF1C672FD663}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C1E79664-E06F-AD87-1C02-BF1C672FD663}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

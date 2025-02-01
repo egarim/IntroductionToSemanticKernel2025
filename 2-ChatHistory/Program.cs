@@ -33,7 +33,7 @@ namespace ChatHistoryExample
             chatHistory.AddAssistantMessage(Answer1.ToString());
 
             // Add another user message to chat history
-            chatHistory.AddUserMessage("Rewrite previous anser in VB.NET");
+            chatHistory.AddUserMessage("Rewrite previous answer in VB.NET");
 
             var Answer2 = await ChatCompletionService.GetChatMessageContentAsync(chatHistory);
 

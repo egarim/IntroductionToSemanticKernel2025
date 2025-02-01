@@ -2,7 +2,9 @@
 using BuildingKernels;
 using Microsoft.SemanticKernel;
 
-var handler = new CustomHttpMessageHandler();
+//this can redirect to any local model that uses the same API as Azure OpenAI or OpenAI
+//you can use L.M studio or Ollama
+var handler = new CustomHttpMessageHandler("http://localhost:1234/v1/chat/completions");
 var httpClient = new HttpClient(handler);
 
 string modelId = "this is going to be ignored";

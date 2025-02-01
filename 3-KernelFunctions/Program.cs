@@ -1,4 +1,5 @@
 ﻿using Microsoft.SemanticKernel;
+using Microsoft.SemanticKernel.Connectors.OpenAI;
 using System.ComponentModel;
 
 namespace KernelFunctions
@@ -16,10 +17,27 @@ namespace KernelFunctions
 
 
             Console.ForegroundColor = ConsoleColor.Green;
+
+            
+            var settings = new OpenAIPromptExecutionSettings
+            {
+                Temperature = Math.Clamp(0.7f, 0.0f, 1.0f), // Ensure temperature is between 0 and 1
+                TopP = Math.Clamp(1.0f, 0.0f, 1.0f),       // Ensure TopP is between 0 and 1
+                MaxTokens = Math.Max(1, 500),               // Ensure positive token count
+                StopSequences = new List<string> { "." },
+                PresencePenalty = Math.Clamp(0.0f, -2.0f, 2.0f),    // Valid range is -2.0 to 2.0
+                FrequencyPenalty = Math.Clamp(0.0f, -2.0f, 2.0f)    // Valid range is -2.0 to 2.0
+            };
+
+            if (settings.MaxTokens > 4000) // Common token limit for many models
+            {
+                throw new ArgumentOutOfRangeException(nameof(settings.MaxTokens), "Token limit exceeds model maximum");
+            }
+
             // 1. Create a semantic function using a prompt template
             var promptTemplate = @"Write a {{$length}} sentence story about {{$topic}}.";
             var promptFunction = kernel.CreateFunctionFromPrompt(
-                promptTemplate,
+                promptTemplate,settings,
                 functionName: "StoryGenerator"
             );
 
@@ -27,7 +45,10 @@ namespace KernelFunctions
             var storyPlugin = kernel.ImportPluginFromObject(new StoryPlugin(), "StoryPlugin");
 
             // Test both approaches
+            // Test both approaches
             Console.WriteLine("1. Testing prompt-based function:");
+            
+
             var promptResult = await kernel.InvokeAsync(promptFunction, new KernelArguments
             {
                 ["length"] = "three",
@@ -40,7 +61,7 @@ namespace KernelFunctions
             Console.WriteLine("\n2. Testing typed function - Generate Story:");
             var typedResult = await kernel.InvokeAsync(storyPlugin["GenerateStory"], new KernelArguments
             {
-                ["length"] = "ten",
+                ["length"] = "three",
                 ["topic"] = "a curious robot",
                 ["genre"] = "sci-fi"
             });

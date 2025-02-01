@@ -79,7 +79,7 @@ namespace BuildingKernels
             Console.WriteLine("What's next?");
             Console.ReadKey();
             Console.WriteLine("Rewrite previous answer in VB.net:");
-            //Console.WriteLine(await kernel.InvokePromptAsync("Rewrite previous answer in VB.net"));
+            Console.WriteLine(await kernel.InvokePromptAsync("Rewrite previous answer in VB.net"));
             Console.ReadKey();
         }
     }

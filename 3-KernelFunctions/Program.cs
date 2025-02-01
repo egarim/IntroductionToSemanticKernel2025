@@ -13,9 +13,24 @@ namespace KernelFunctions
                 .AddOpenAIChatCompletion(modelId, OpenAiKey)
                 .Build();
 
-            var prompt = "Write a hello world program in C#";
-            var result = await kernel.InvokePromptAsync(prompt);
+            // Create a semantic function using a prompt template
+            var promptTemplate = @"Write a {{$length}} sentence story about {{$topic}}.";
+            var storyFunction = kernel.CreateFunctionFromPrompt(
+                promptTemplate,
+                functionName: "StoryGenerator"
+            );
 
+            // Prepare the arguments for the function
+            var arguments = new KernelArguments
+            {
+                ["length"] = "three",
+                ["topic"] = "a brave astronaut"
+            };
+
+            // Execute the function
+            var result = await kernel.InvokeAsync(storyFunction, arguments);
+
+            Console.WriteLine("Generated Story:");
             Console.WriteLine(result);
             Console.ReadKey();
         }

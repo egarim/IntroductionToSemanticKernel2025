@@ -36,16 +36,13 @@ namespace KernelFunctions
 
             // 1. Create a semantic function using a prompt template
             var promptTemplate = @"Write a {{$length}} sentence story about {{$topic}}.";
-            var promptFunction = kernel.CreateFunctionFromPrompt(
-                promptTemplate,settings,
+            KernelFunction promptFunction = kernel.CreateFunctionFromPrompt(
+                promptTemplate, settings,
                 functionName: "StoryGenerator"
             );
 
-            // 2. Create functions from a plugin type
-            var storyPlugin = kernel.ImportPluginFromObject(new StoryPlugin(), "StoryPlugin");
-
-            // Test both approaches
-            // Test both approaches
+       
+         
             Console.WriteLine("1. Testing prompt-based function:");
             
 
@@ -57,48 +54,61 @@ namespace KernelFunctions
             Console.WriteLine(promptResult);
             Console.WriteLine("\nPress any key to continue...");
             Console.ReadKey();
+
+
+
+
             Console.ForegroundColor = ConsoleColor.Blue;
-            Console.WriteLine("\n2. Testing typed function - Generate Story:");
-            var typedResult = await kernel.InvokeAsync(storyPlugin["GenerateStory"], new KernelArguments
+
+            // 2. Create functions from a plugin type
+            var textAnalysisPlugin = kernel.ImportPluginFromObject(new TextAnalysisPlugin());
+
+            Console.WriteLine("\n2. Testing typed function - CountWords :");
+            var typedResult = await kernel.InvokeAsync(textAnalysisPlugin["CountWords"], new KernelArguments
             {
-                ["length"] = "three",
-                ["topic"] = "a curious robot",
-                ["genre"] = "sci-fi"
+                ["input"] = "On April 12, 1961, Soviet cosmonaut Yuri Gagarin made history as the first human to travel into space. A former fighter pilot, Gagarin was selected from a group of 20 Soviet Air Force candidates due to his exceptional skills and charisma."
             });
             Console.WriteLine(typedResult);
             Console.WriteLine("\nPress any key to continue...");
             Console.ReadKey();
 
-            Console.WriteLine("\n3. Testing typed function - Add Moral:");
-            var moralResult = await kernel.InvokeAsync(storyPlugin["AddMoral"], new KernelArguments
+            Console.WriteLine("\n3. Testing typed function - DetectSentiment");
+            var moralResult = await kernel.InvokeAsync(textAnalysisPlugin["DetectSentiment"], new KernelArguments
             {
-                ["story"] = typedResult.ToString(),
-                ["moralType"] = "funny"
+                ["input"] = "On April 12, 1961, the Soviet cosmonaut Yuri Gagarin made history as the first human to travel into space. A former fighter pilot, Gagarin was selected from a group of 20 Soviet Air Force candidates due to his exceptional skills and charisma."
             });
             Console.WriteLine(moralResult);
             Console.ReadKey();
         }
     }
 
-    public class StoryPlugin
+    public class TextAnalysisPlugin
     {
-        [KernelFunction, Description("Generate a story based on given parameters")]
-        public async Task<string> GenerateStory(
-            [Description("Number of sentences in the story")] string length,
-            [Description("Main topic of the story")] string topic,
-            [Description("Genre of the story (e.g., sci-fi, fantasy, drama)")] string genre = "general"
-        )
+        [KernelFunction]
+        [Description("Counts the number of words in a given text.")]
+        public int CountWords([Description("The text to analyze.")] string input)
         {
-            return $"This is a {genre} story about {topic} that will be {length} sentences long.";
+            if (string.IsNullOrWhiteSpace(input)) return 0;
+            int wordCount = input.Split(new[] { ' ', '\n', '\t' }, StringSplitOptions.RemoveEmptyEntries).Length;
+            return wordCount;
         }
 
-        [KernelFunction, Description("Add a moral to the end of a story")]
-        public string AddMoral(
-            [Description("The story to add a moral to")] string story,
-            [Description("The type of moral (funny, serious, thoughtful)")] string moralType = "thoughtful"
-        )
+        [KernelFunction]
+        [Description("Detects the sentiment of a given text.")]
+        public Task<string> DetectSentiment([Description("The text to analyze.")]  string input)
         {
-            return $"{story}\nMoral of the story ({moralType}): Every great story has a lesson to learn.";
+            if (string.IsNullOrWhiteSpace(input)) return Task.FromResult("Neutral");
+
+            string[] positiveWords = { "good", "great", "happy", "awesome", "excellent" };
+            string[] negativeWords = { "bad", "sad", "terrible", "horrible", "awful" };
+
+            int positiveCount = input.Split().Count(word => positiveWords.Contains(word.ToLower()));
+            int negativeCount = input.Split().Count(word => negativeWords.Contains(word.ToLower()));
+
+            string sentiment = positiveCount > negativeCount ? "Positive" :
+                               negativeCount > positiveCount ? "Negative" : "Neutral";
+
+            return Task.FromResult(sentiment);
         }
     }
 }
